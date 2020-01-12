@@ -1,0 +1,38 @@
+// изначальная грамматика (есть левая рекурсия и правое ветвление)
+BLOCK -> var PAIR
+PAIR -> VARIABLE : TYPE ; PAIR
+PAIR -> VARIABLE : TYPE ; BLOCK
+PAIR -> ''
+VARIABLE -> VARIABLE NAME
+VARIABLE -> NAME ,
+VARIABLE -> ''
+NAME -> [_a-zA-Z][\\w]*
+TYPE -> byte | boolean | word | integer | longint | real | double | char | string
+
+===============================================================================
+
+// грамматика без левой рекурсии и правого ветвления
+BLOCK -> var PAIR
+PAIR -> VARIABLE : TYPE ; PAIR'
+PAIR -> ''
+PAIR' -> PAIR
+PAIR' -> BLOCK
+VARIABLE -> NAME VARIABLE'
+VARIABLE ->  ''
+VARIABLE' -> , NAME VARIABLE'
+VARIABLE' -> ''
+NAME -> [_a-zA-Z][\\w]*
+TYPE -> byte | boolean | word | integer | longint | real | double | char | string
+===============================================================================
+
+-----------------------------------------------------------------------------------------------------------------
+                FIRST                                                                              | FOLLOW     |
+---------------------------------------------------------------------------------------------------| -----------|
+  BLOCK     | { var }                                                                              | { $ }      |
+  PAIR      | { '', [_a-zA-Z][\\w]*, : }                                                           | { $ }      |
+  PAIR'     | { var, '', [_a-zA-Z][\\w]*, : }                                                      | { $ }      |
+  VARIABLE  | { [_a-zA-Z][\\w]*, '' }                                                              | { : }      |
+  VARIABLE' | { ',', '' }                                                                          | { : }      |
+  NAME      | { [_a-zA-Z][\\w]* }                                                                  | { ',', : } |
+  TYPE      | { byte, boolean, word, integer, longint, real, double, char, string }                | { ; }      |
+-----------------------------------------------------------------------------------------------------------------

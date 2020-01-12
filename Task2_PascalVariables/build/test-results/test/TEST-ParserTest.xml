@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ParserTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-11-19T10:52:57" hostname="damtev-ThinkPad-E480" time="0.035">
+  <properties/>
+  <testcase name="incorrect_NameIsKeyword" classname="ParserTest" time="0.035"/>
+  <system-out><![CDATA[var longint: integer;
+======================================================================================================================================================
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

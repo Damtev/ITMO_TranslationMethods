@@ -1,0 +1,38 @@
+int a = 7;
+
+string returnRandomString(bool b, char c, float d) {
+    string s = 'hello, world';
+    for (i in a..0 step -2) {
+        d = 1.2 * a;
+        if (d * 2 < 20 == d > 8) {
+            s = 'abc';
+        }
+    }
+
+    while (c == 'c') {
+        if (b) {
+            s = 'true';
+        } else {
+            s = 'false';
+        }
+        c = c + c;
+    }
+
+    return 'random';
+}
+
+float f = 0.5;
+
+main {
+    int myVar = readInt();
+    string myStr = readStr();
+    printInt(myVar);
+    printStr(myStr);
+    if (true) {
+        int i = 0;
+        while (i < myVar) {
+            printStr(returnRandomString(true, 'r', f));
+            i = i + 1;
+        }
+    }
+}

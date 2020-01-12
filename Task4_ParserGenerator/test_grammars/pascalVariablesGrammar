@@ -1,0 +1,47 @@
+Node @
+var value = StringBuilder()
+@
+
+start -> VAR $res.value.append(text + " ");$ pair $res.value.append(var0.value);$ EOF;
+
+pair -> variable $res.value.append(var0.value);$ COLON $res.value.append(text + " ");$ type
+    $res.value.append(var1.value);$ SEMICOLON $res.value.append(text + " ");$ pairPrime $res.value.append(var2.value);$;
+pair -> EPS;
+
+pairPrime -> pair $if (children.isNotEmpty()) res.value.append(children.last().value);$ ;
+pairPrime -> start $res.value.append(var0.value);$ ;
+
+variable -> NAME $res.value.append(text);$ variablePrime $res.value.append(var0.value);$;
+variable -> EPS;
+
+variablePrime -> COMMA $res.value.append(text + " ");$ NAME $res.value.append(text);$
+    variablePrime $res.value.append(var0.value);$;
+variablePrime -> EPS;
+
+type -> BYTE $res.value = StringBuilder(text);$ ;
+type -> BOOLEAN $res.value = StringBuilder(text);$ ;
+type -> WORD $res.value = StringBuilder(text);$ ;
+type -> INTEGER $res.value = StringBuilder(text);$ ;
+type -> LONGINT $res.value = StringBuilder(text);$ ;
+type -> REAL $res.value = StringBuilder(text);$ ;
+type -> DOUBLE $res.value = StringBuilder(text);$ ;
+type -> CHAR $res.value = StringBuilder(text);$ ;
+type -> STRING $res.value = StringBuilder(text);$ ;
+
+VAR -> 'var';
+COLON -> ':';
+SEMICOLON -> ';';
+COMMA -> ',';
+EPS -> 'EPS';
+EOF -> '\\$';
+
+BYTE -> 'byte';
+BOOLEAN -> 'boolean';
+WORD -> 'word';
+INTEGER -> 'integer';
+LONGINT -> 'longint';
+REAL -> 'real';
+DOUBLE -> 'double';
+CHAR -> 'char';
+STRING -> 'string';
+NAME -> '[_a-zA-Z][\\w]*';
