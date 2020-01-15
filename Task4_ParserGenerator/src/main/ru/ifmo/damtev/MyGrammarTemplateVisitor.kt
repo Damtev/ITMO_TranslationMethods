@@ -2,16 +2,6 @@ package main.ru.ifmo.damtev
 
 import grammar.template.GrammarTemplateBaseVisitor
 import grammar.template.GrammarTemplateParser
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.HashSet
-import kotlin.collections.arrayListOf
-import kotlin.collections.contains
-import kotlin.collections.hashMapOf
-import kotlin.collections.hashSetOf
-import kotlin.collections.indices
-import kotlin.collections.linkedMapOf
 import kotlin.collections.set
 
 const val START = "start"
@@ -88,17 +78,7 @@ class MyGrammarTemplateVisitor : GrammarTemplateBaseVisitor<String>() {
         tokens[tokenName] = value
     }
 
-    private fun getFirst(s : String): HashSet<String> {
-        /*if (s in tokens.keys) {
-            return hashSetOf(s)
-        }
-
-        if (s in first.keys) {
-            return HashSet(first[s]!!)
-        }
-
-        return hashSetOf()*/
-
+    private fun getFirst(s: String): HashSet<String> {
         if (s in tokens) {
             val result = hashSetOf<String>()
             result.add(s)
@@ -114,35 +94,7 @@ class MyGrammarTemplateVisitor : GrammarTemplateBaseVisitor<String>() {
         for (key in rules.keys) {
             first[key] = hashSetOf()
         }
-        /*for (token in tokens.keys) {
-            first[token] = hashSetOf(token)
-        }*/
         var changed = true
-        /*while (changed) {
-            changed = false
-            for (ruleName in rules.keys) {
-                ruleNumberFromFirst[ruleName] = hashMapOf()
-                for ((i, rule) in rules[ruleName]!!.withIndex()) {
-                    val curSize = first[ruleName]!!.size
-                    val firstFirst = getFirst(rule[0])
-                    if (EPS in firstFirst && firstFirst.size > 1) {
-                        firstFirst.remove(EPS)
-                        if (rule.size > 1) {
-                            firstFirst.addAll(getFirst(rule[1]))
-                        } else {
-                            firstFirst.add(EPS)
-                        }
-                    }
-                    for (it in firstFirst) {
-                        ruleNumberFromFirst[ruleName]!![it] = i
-                    }
-                    first[ruleName]!!.addAll(firstFirst)
-                    if (curSize != first[ruleName]!!.size) {
-                        changed = true
-                    }
-                }
-            }
-        }*/
 
         while (changed) {
             changed = false
@@ -159,46 +111,14 @@ class MyGrammarTemplateVisitor : GrammarTemplateBaseVisitor<String>() {
         }
     }
 
-    private fun getFollow(s : String) = if (s in follow.keys) HashSet(follow[s]!!) else hashSetOf()
+    private fun getFollow(s: String) = if (s in follow.keys) HashSet(follow[s]!!) else hashSetOf()
 
-    // todo: добавить атрибуты
     private fun buildFollow() {
         for (key in rules.keys) {
             follow[key] = hashSetOf()
         }
         follow[START] = hashSetOf(EOF)
         var changed = true
-
-        /*while (changed) {
-            changed = false
-            for (ruleName in rules.keys) {
-                for (rule in rules[ruleName]!!) {
-                    for (pos in rule.indices) {
-                        if (rule[pos] !in rules.keys) {
-                            continue
-                        }
-                        val nonTerminal = rule[pos]
-                        val curSize = follow[nonTerminal]!!.size
-
-                        val nextFirst = if (pos == rule.lastIndex) {
-                            hashSetOf(EPS)
-                        } else {
-                            getFirst(rule[pos + 1])
-                        }
-
-                        if (EPS in nextFirst) {
-                            nextFirst.remove(EPS)
-                            follow[nonTerminal]!!.addAll(getFollow(ruleName))
-                        }
-
-                        follow[nonTerminal]!!.addAll(nextFirst)
-                        if (follow[nonTerminal]!!.size != curSize) {
-                            changed = true
-                        }
-                    }
-                }
-            }
-        }*/
 
         while (changed) {
             changed = false
